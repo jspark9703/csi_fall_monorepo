@@ -1,0 +1,33 @@
+[project]
+name = "fall-sensing-research-combined"
+version = "0.1.0"
+description = "Combined feature extraction variant for fall detection"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.0.0",
+    "pandas>=2.0.0",
+    "dvc[s3]>=3.0.0",
+    "wandb>=0.17.0",
+    "evidently>=0.4.16",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.29.0",
+    "pyyaml>=6.0",
+    "fall-sensing-core",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fall_sensing"]
+
+[tool.uv.sources]
+fall-sensing-core = { workspace = true }
+
+[[tool.uv.index]]
+name = "pytorch-cuda"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true

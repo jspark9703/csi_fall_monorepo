@@ -1,0 +1,35 @@
+stages:
+  preprocess:
+    cmd: python -m fall_sensing.research.preprocess
+    deps:
+      - src/fall_sensing/research/preprocess.py
+      - ../../shared/src/fall_sensing/core/sanitization.py
+      - ../../shared/src/fall_sensing/core/feature.py
+      - data/raw/
+    params:
+      - params.yaml:
+          - preprocessing.hampel_window
+          - preprocessing.n_sigma
+          - feature.dwt_level
+          - feature.wavelet
+          - feature.n_pca
+    outs:
+      - data/processed/features.npz:
+          cache: true
+
+  train:
+    cmd: python -m fall_sensing.research.train
+    deps:
+      - src/fall_sensing/research/train.py
+      - data/processed/features.npz
+    params:
+      - params.yaml:
+          - train.epochs
+          - train.batch_size
+          - train.learning_rate
+    outs:
+      - data/models/best_model.pt:
+          cache: true
+    metrics:
+      - data/metrics.json:
+          cache: false

@@ -1,0 +1,36 @@
+[project]
+name = "csi-fall-monorepo"
+version = "0.1.0"
+description = "CSI-based fall detection system monorepo with uv workspace"
+requires-python = ">=3.11"
+dependencies = [
+    "fall-sensing-core",
+    "fall-sensing-infrastructure",
+    "fall-sensing-service",
+    "fall-sensing-research-acf_cwt",
+    "fall-sensing-research-combined",
+]
+
+[tool.uv.workspace]
+members = [
+    "shared",
+    "apps/infrastructure",
+    "apps/service",
+    "apps/research/acf_cwt",
+    "apps/research/combined_feature",
+]
+
+[tool.uv.sources]
+fall-sensing-core = { workspace = true }
+fall-sensing-infrastructure = { workspace = true }
+fall-sensing-service = { workspace = true }
+fall-sensing-research-acf_cwt = { workspace = true }
+fall-sensing-research-combined = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
+]

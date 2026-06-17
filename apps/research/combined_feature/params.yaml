@@ -1,0 +1,14 @@
+preprocessing:
+  hampel_window: 5
+  n_sigma: 3.0
+
+feature:
+  dwt_level: 4
+  wavelet: db4
+  n_pca: 3
+
+train:
+  epochs: 50
+  batch_size: 32
+  learning_rate: 0.001
+  n_classes: 2

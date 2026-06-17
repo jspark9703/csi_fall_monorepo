@@ -1,0 +1,15 @@
+# Ignore common directories
+.git
+.venv
+__pycache__
+*.pyc
+.ipynb_checkpoints
+notebooks/
+
+# Ignore DVC cache
+.dvc/cache
+
+# Keep only data, models, and params tracked
+!/data/
+!/params.yaml
+!/dvc.yaml

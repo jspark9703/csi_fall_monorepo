@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\jspar\\\\Desktop\\\\SCHOOL\\\\캡스톤\\\\csi_fall_monorepo\" -Force)",
+      "Bash(Select-Object Name, Mode)"
+    ]
+  }
+}
