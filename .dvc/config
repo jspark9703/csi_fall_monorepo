@@ -1,10 +1,9 @@
 [core]
-    remote = gdrive-dvc
+    remote = local-storage
     autostage = true
-[remote "gdrive-dvc"]
-    url = gdrive://<GDRIVE_FOLDER_ID>
-    # 설정 방법:
-    # 1. Google Drive에서 DVC 캐시용 폴더 생성
-    # 2. 폴더의 공유 링크에서 ID 추출: https://drive.google.com/drive/folders/{ID}
-    # 3. 위의 <GDRIVE_FOLDER_ID>를 실제 ID로 교체
-    # 4. dvc remote modify gdrive-dvc --local auth basic 으로 인증 설정
+[remote "local-storage"]
+    url = .dvc/cache
+    # 로컬 저장소 설정:
+    # - URL은 상대경로 또는 절대경로 모두 가능
+    # - 상대경로: .dvc/cache (모노레포 루트 기준)
+    # - 절대경로: C:\path\to\dvc-cache (Windows) 또는 /path/to/dvc-cache (Unix)

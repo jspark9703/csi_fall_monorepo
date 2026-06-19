@@ -5,7 +5,7 @@ stages:
       - src/fall_sensing/research/preprocess.py
       - ../../shared/src/fall_sensing/core/sanitization.py
       - ../../shared/src/fall_sensing/core/feature.py
-      - data/raw/
+      - ../../data/research/acf_cwt/raw/
     params:
       - params.yaml:
           - preprocessing.hampel_window
@@ -14,22 +14,24 @@ stages:
           - feature.wavelet
           - feature.n_pca
     outs:
-      - data/processed/features.npz:
+      - ../../data/research/acf_cwt/features/features.npz:
+          cache: true
+      - ../../data/research/acf_cwt/preprocessed/preprocessed.npz:
           cache: true
 
   train:
     cmd: python -m fall_sensing.research.train
     deps:
       - src/fall_sensing/research/train.py
-      - data/processed/features.npz
+      - ../../data/research/acf_cwt/features/features.npz
     params:
       - params.yaml:
           - train.epochs
           - train.batch_size
           - train.learning_rate
     outs:
-      - data/models/best_model.pt:
+      - ../../data/research/acf_cwt/models/best_model.pt:
           cache: true
     metrics:
-      - data/metrics.json:
+      - ../../data/research/acf_cwt/models/metrics.json:
           cache: false

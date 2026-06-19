@@ -43,13 +43,24 @@ mlflow.db
 .dvc/tmp
 dvc.lock
 
-# Data (large files go to DVC or S3)
+# Data (large files go to DVC)
+# 각 research 폴더별 data/ 폴더는 Git에서 제외
+# DVC로 추적되는 파일은 .dvc.yaml에 명시
+data/research/*/raw/
+data/research/*/preprocessed/
+data/research/*/features/
+data/research/*/models/
+
+# 대용량 파일 포맷 (모두 DVC로 관리)
 *.parquet
 *.npy
 *.npz
 *.h5
 *.hdf5
-data/
+*.pt          # PyTorch models
+*.pth         # PyTorch checkpoints
+*.pkl         # Pickle files
+*.csv         # Large CSV files
 
 # OS
 .DS_Store

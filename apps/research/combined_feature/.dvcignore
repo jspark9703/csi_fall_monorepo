@@ -1,15 +1,22 @@
-# Ignore common directories
+# DVC 추적 파일 정의
+
+# 기본 무시 규칙
 .git
 .venv
 __pycache__
 *.pyc
 .ipynb_checkpoints
+.dvc/cache
+src/
+
+# Jupyter 노트북은 커밋하지만 DVC 캐시는 하지 않음
 notebooks/
 
-# Ignore DVC cache
-.dvc/cache
-
-# Keep only data, models, and params tracked
+# DVC로 추적할 경로만 명시 (나머지는 무시)
+# data/ 폴더의 모든 파일 추적
 !/data/
+
+# 파이프라인 설정 파일
 !/params.yaml
 !/dvc.yaml
+!/dvc.lock
