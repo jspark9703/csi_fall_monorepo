@@ -1,0 +1,3 @@
+# 소스 데이터셋 폴더
+# 각 데이터셋별 폴더를 생성하여 원본 데이터 저장
+# 예: data/mandeley/, data/HT-HAR/, data/manual/

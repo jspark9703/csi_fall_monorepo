@@ -1,14 +1,23 @@
+# 실험 설정
+experiment:
+  name: exp_001           # 실험 이름 (DVC 경로에 반영됨)
+  dataset: mandeley       # data/ 아래 어떤 데이터셋 사용할지
+
+# 데이터 분할 비율
 preprocessing:
-  hampel_window: 5
-  n_sigma: 3.0
+  train_ratio: 0.8        # train/test 분할 비율
+  hampel_window: 5        # Hampel 필터 윈도우 크기
+  n_sigma: 3.0            # Hampel 필터 시그마
 
+# 특성 추출 파라미터
 feature:
-  dwt_level: 4
-  wavelet: db4
-  n_pca: 3
+  dwt_level: 4            # DWT 레벨
+  wavelet: db4            # 웨이블릿 타입
+  n_pca: 3                # PCA 차원 축소 차원
 
+# 모델 훈련 파라미터
 train:
-  epochs: 50
-  batch_size: 32
-  learning_rate: 0.001
-  n_classes: 2
+  epochs: 50              # 에포크 수
+  batch_size: 32          # 배치 크기
+  learning_rate: 0.001    # 학습률
+  n_classes: 2            # 분류 클래스 수 (fall/no-fall)

@@ -1,37 +1,62 @@
+vars:
+  - params.yaml
+
 stages:
-  preprocess:
-    cmd: python -m fall_sensing.research.preprocess
+  split:
+    cmd: python scripts/preprocess.py --stage split
     deps:
-      - src/fall_sensing/research/preprocess.py
+      - ../../data/${experiment.dataset}/
+    outs:
+      - data/${experiment.name}/raw/train/
+      - data/${experiment.name}/raw/test/
+    params:
+      - params.yaml:
+          - experiment
+          - preprocessing.train_ratio
+
+  preprocess:
+    cmd: python scripts/preprocess.py --stage preprocess
+    deps:
       - ../../shared/src/fall_sensing/core/sanitization.py
-      - ../../shared/src/fall_sensing/core/feature.py
-      - ../../data/research/combined_feature/raw/
+      - data/${experiment.name}/raw/
+    outs:
+      - data/${experiment.name}/preprocessed/
     params:
       - params.yaml:
           - preprocessing.hampel_window
           - preprocessing.n_sigma
-          - feature.dwt_level
-          - feature.wavelet
-          - feature.n_pca
-    outs:
-      - ../../data/research/combined_feature/features/features.npz:
-          cache: true
-      - ../../data/research/combined_feature/preprocessed/preprocessed.npz:
-          cache: true
 
-  train:
-    cmd: python -m fall_sensing.research.train
+  extract_features:
+    cmd: python scripts/feature_extraction.py
     deps:
-      - src/fall_sensing/research/train.py
-      - ../../data/research/combined_feature/features/features.npz
+      - ../../shared/src/fall_sensing/core/feature.py
+      - data/${experiment.name}/preprocessed/
+    outs:
+      - data/${experiment.name}/features/
     params:
       - params.yaml:
-          - train.epochs
-          - train.batch_size
-          - train.learning_rate
+          - feature
+
+  train:
+    cmd: python scripts/train.py
+    deps:
+      - data/${experiment.name}/features/
     outs:
-      - ../../data/research/combined_feature/models/best_model.pt:
-          cache: true
+      - data/${experiment.name}/models/best_model.pt
     metrics:
-      - ../../data/research/combined_feature/models/metrics.json:
+      - data/${experiment.name}/result/metrics.json:
           cache: false
+    params:
+      - params.yaml:
+          - train
+
+  visualize:
+    cmd: python scripts/visualize.py
+    deps:
+      - data/${experiment.name}/models/best_model.pt
+      - data/${experiment.name}/features/
+    outs:
+      - data/${experiment.name}/result/plots/
+    params:
+      - params.yaml:
+          - experiment

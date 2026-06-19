@@ -41,15 +41,15 @@ mlflow.db
 # DVC
 .dvc/config.local
 .dvc/tmp
-dvc.lock
+# dvc.lock은 git에 추적됨 (실험 재현성 위해)
 
 # Data (large files go to DVC)
-# 각 research 폴더별 data/ 폴더는 Git에서 제외
-# DVC로 추적되는 파일은 .dvc.yaml에 명시
-data/research/*/raw/
-data/research/*/preprocessed/
-data/research/*/features/
-data/research/*/models/
+# 소스 데이터셋: data/{dataset_name}/
+# 실험 데이터: apps/research/{variant}/data/{experiment_name}/
+data/*/
+apps/research/*/data/*/
+!data/.gitkeep
+!apps/research/**/data/.gitkeep
 
 # 대용량 파일 포맷 (모두 DVC로 관리)
 *.parquet

@@ -1,6 +1,6 @@
-# DVC 추적 파일 정의
+# DVC 추적 규칙
 
-# 기본 무시 규칙
+# 기본 무시
 .git
 .venv
 __pycache__
@@ -8,15 +8,8 @@ __pycache__
 .ipynb_checkpoints
 .dvc/cache
 src/
-
-# Jupyter 노트북은 커밋하지만 DVC 캐시는 하지 않음
 notebooks/
+scripts/
 
-# DVC로 추적할 경로만 명시 (나머지는 무시)
-# data/ 폴더의 모든 파일 추적
-!/data/
-
-# 파이프라인 설정 파일
-!/params.yaml
-!/dvc.yaml
-!/dvc.lock
+# dvc.yaml에서 명시된 outputs만 DVC가 추적
+# (!/data/ 제거 - DVC가 자동으로 outputs 관리)
